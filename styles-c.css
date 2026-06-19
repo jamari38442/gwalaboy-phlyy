@@ -1,0 +1,89 @@
+/* =========================================================================
+   VERSION C — "Cover Story" cinematic edition
+   Layered ON TOP of styles.css. Uses Higgsfield-generated brand artwork.
+   ========================================================================= */
+
+:root {
+  --gold: #f7c14b;
+  --grain-strength: 0.07;
+}
+
+/* heavier grain + global vignette for cinematic depth */
+body::after { opacity: var(--grain-strength); }
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(0,0,0,0.55) 100%);
+}
+
+/* ---- HERO: editorial letterbox + side label ---- */
+.hero { align-items: center; }
+.hero-bg img { filter: grayscale(0.15) contrast(1.1) brightness(0.92); }
+.hero-scrim {
+  background:
+    linear-gradient(90deg, rgba(10,8,7,0.85) 0%, rgba(10,8,7,0.35) 45%, rgba(10,8,7,0.55) 100%),
+    linear-gradient(180deg, rgba(10,8,7,0.6), rgba(10,8,7,0.55) 60%, var(--ink) 100%);
+}
+/* cinematic top/bottom bars */
+.hero::before, .hero::after {
+  content: "";
+  position: absolute; left: 0; right: 0; height: 46px; z-index: 3;
+  background: var(--ink);
+  pointer-events: none;
+}
+.hero::before { top: 0; }
+.hero::after  { bottom: 0; }
+
+.hero-title {
+  font-size: clamp(4rem, 16vw, 15rem);
+  background: linear-gradient(180deg, #fff7e6 0%, var(--gold) 55%, var(--gold-deep) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 10px 40px rgba(0,0,0,0.55));
+}
+.hero-title .ln-2 { -webkit-text-fill-color: transparent; }
+
+/* rotated edition label down the right edge */
+.edition-label {
+  position: absolute;
+  right: clamp(16px, 3vw, 34px);
+  top: 50%;
+  z-index: 4;
+  transform: translateY(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+}
+.edition-label b { color: var(--gold); }
+
+/* ---- oversized ghost numerals behind section titles ---- */
+.section-head { position: relative; }
+.section .section-num {
+  font-size: 0.8rem;
+}
+.section-title { position: relative; z-index: 1; }
+
+/* gold glow on interactive cards */
+.drop:hover, .rel:hover, .item:hover, .vid:hover {
+  box-shadow: 0 18px 50px -20px rgba(247,193,75,0.45);
+}
+
+/* discography cover images now real — richer hover */
+.rel-cover img { filter: grayscale(0.05) contrast(1.05); }
+
+/* store: cinematic captions */
+.item-img img { filter: grayscale(0.05) contrast(1.05) brightness(0.96); }
+
+/* about portrait uses generated cinematic frame */
+.about-portrait img { filter: grayscale(0.1) contrast(1.08); }
+
+/* booking card glow */
+.book-card { box-shadow: 0 30px 80px -40px rgba(247,193,75,0.4); }
+
+@media (max-width: 760px) {
+  .hero::before, .hero::after { height: 26px; }
+  .edition-label { display: none; }
+}
