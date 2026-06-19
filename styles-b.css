@@ -1,0 +1,25 @@
+/* =========================================================================
+   VERSION B — "Spotlight" edition. Centered, compact hero, outlined accent.
+   Layered ON TOP of styles.css.
+   ========================================================================= */
+
+.hero { align-items: center; text-align: center; }
+.hero .wrap { max-width: 920px; margin-inline: auto; }
+.hero-badge { margin-inline: auto; }
+
+/* smaller hero title than version A */
+.hero-title {
+  font-size: clamp(2.8rem, 9vw, 7rem);
+  margin-left: 0;
+}
+.hero-title .ln-2 {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--gold);
+  text-stroke: 1.5px var(--gold);
+}
+.hero-sub { margin-inline: auto; }
+.hero-actions { justify-content: center; }
+.scroll-cue { display: none; }
+
+/* a touch more air in section heads */
+.section-title { font-size: clamp(2.4rem, 7vw, 5.4rem); }

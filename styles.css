@@ -798,3 +798,181 @@ a { color: inherit; text-decoration: none; }
   *, *::after, *::before { animation: none !important; scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* =========================================================================
+   ADDITIONS — top social bar, logo, about media, store page, cta band
+   ========================================================================= */
+
+/* ---- top social bar ---- */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1001;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 0 16px;
+  background: rgba(6,5,4,0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar a {
+  color: var(--bone-dim);
+  display: inline-flex;
+  transition: color .25s, transform .25s;
+}
+.topbar a:hover { color: var(--gold); transform: translateY(-2px); }
+.topbar svg { width: 16px; height: 16px; }
+.topbar .tb-tag {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bone-faint);
+  margin-right: auto;
+}
+.topbar .tb-tag2 {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-left: auto;
+}
+/* nav now sits below the top bar */
+.nav { top: 38px; }
+html { scroll-padding-top: 116px; }
+
+/* ---- logo ---- */
+.brand { gap: 0.6ch; }
+.brand-logo {
+  height: 30px; width: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  flex: none;
+}
+.footer-logo { height: 64px; width: 64px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); margin-bottom: 16px; }
+
+/* ---- store item meta ---- */
+.item-meta {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+  margin-top: 4px;
+}
+/* flow store grid nicely for many items */
+.shop-grid { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+
+/* ---- about media: keep online images modest so they don't upscale ---- */
+.about-media { display: flex; flex-direction: column; gap: 14px; max-width: 460px; }
+.about-video {
+  position: relative;
+  aspect-ratio: 16/9;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--ink-3);
+}
+.about-video img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.72); }
+.about-video iframe { width: 100%; height: 100%; border: 0; }
+.about-portrait { aspect-ratio: 16/9; max-width: 460px; }
+.about-portrait img { object-position: center 30%; }
+
+/* ---- homepage store CTA band (store now lives on its own page) ---- */
+.shop-cta {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  background:
+    radial-gradient(120% 160% at 85% 0%, var(--gold-soft), transparent 55%),
+    var(--ink-2);
+}
+.shop-cta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: clamp(40px, 7vw, 84px) 0;
+}
+.shop-cta h2 {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-weight: 400;
+  line-height: 0.88;
+  font-size: clamp(2.4rem, 6vw, 5rem);
+}
+.shop-cta h2 em { font-style: normal; color: var(--gold); }
+.shop-cta p { color: var(--bone-dim); margin-top: 10px; max-width: 42ch; }
+.shop-cta .ghost-logo {
+  position: absolute;
+  right: -30px; bottom: -40px;
+  width: 280px; height: 280px;
+  opacity: 0.08;
+  border-radius: 50%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* ---- dedicated store page ---- */
+.store-page { padding-top: 116px; }
+.store-hero {
+  position: relative;
+  padding: clamp(40px, 7vw, 90px) 0 clamp(28px, 4vw, 50px);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+.store-hero .wrap { position: relative; z-index: 1; }
+.store-hero h1 {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-weight: 400;
+  line-height: 0.85;
+  font-size: clamp(3rem, 11vw, 9rem);
+}
+.store-hero h1 em { font-style: normal; color: var(--gold); }
+.store-hero p { color: var(--bone-dim); margin-top: 14px; max-width: 52ch; }
+.store-hero .ghost-logo {
+  position: absolute; right: 2%; top: 50%; transform: translateY(-50%);
+  width: clamp(160px, 26vw, 340px); height: clamp(160px, 26vw, 340px);
+  border-radius: 50%; object-fit: cover; opacity: 0.12; pointer-events: none;
+}
+.filters {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  margin: 28px 0 40px;
+}
+.filters button {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 9px 16px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--bone-dim);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all .25s;
+}
+.filters button:hover { color: var(--bone); border-color: var(--bone-dim); }
+.filters button.active { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+.item.hide { display: none; }
+.store-foot-note {
+  margin-top: 40px; text-align: center;
+  font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--bone-faint);
+}
+
+@media (max-width: 760px) {
+  .topbar { gap: 13px; height: 34px; }
+  .topbar .tb-tag, .topbar .tb-tag2 { display: none; }
+  .nav { top: 34px; }
+  html { scroll-padding-top: 96px; }
+  .about-media { max-width: 100%; }
+}

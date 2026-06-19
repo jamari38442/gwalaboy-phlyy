@@ -1,58 +1,56 @@
 # GWALABOY PHLYY — Official Site (review build)
 
-Static website for North Miami artist **GwalaBoy Phlyy**, modeled on the Lil Baby /
-Gunna artist-site format. Dark, gritty "POWERHOUSE" trap aesthetic. No build step,
-no dependencies — just open the HTML.
+Static site for North Miami artist **GwalaBoy Phlyy**, modeled on the Lil Baby / Gunna
+artist-site format. Dark, gritty "POWERHOUSE" trap aesthetic. No build step, no dependencies.
 
 ## Three versions (pick one to ship)
 
-| File | Hero | Imagery |
-|------|------|---------|
-| `index.html` | **Still** cinematic hero (his real YouTube footage) | Real YouTube thumbnails + styled type-covers |
-| `index-video.html` | **Looping background video** hero (Gunna-style) | Same as A |
-| `index-c.html` | **"Cover Story" edition** — cinematic AI hero | Higgsfield-generated album covers + merch photos + his YouTube footage |
+| Homepage | Store page | Hero |
+|----------|-----------|------|
+| `index.html` (A) | `store.html` | Cinematic still hero, **large** title (his YouTube footage) |
+| `index-b.html` (B) | `store-b.html` | Centered "Spotlight" hero, **smaller** outlined title |
+| `index-c.html` (C) | `store-c.html` | **AI "Cover Story"** hero (cinematic art) + edition label, smaller gold title |
 
-All three share `styles.css` + `script.js`. Version C also loads `styles-c.css`.
+Shared: `styles.css`, `script.js`. Version layers: `styles-b.css`, `styles-c.css`.
 
 ## Sections
-Sticky nav · Hero · Latest / New Releases · Music (full discography + Spotify embed) ·
-Videos (YouTube grid) · Store (mock) · About / Bio · Booking · Footer.
+Top social bar · sticky nav (with logo) · hero · Latest/New Releases · Music (full
+discography with cover art + Spotify embed) · Videos (autoplay-on-scroll YouTube) ·
+Store CTA → dedicated store page · About (bio + interview video) · Booking · footer.
 
-## Content sources (gathered from the web)
-- **Streaming:** Spotify `10xVDKM35cOzmiypmMpxYR`, Apple Music `1353274118`, Deezer `14215571`, SoundCloud `gwalaboymusic`
-- **Socials:** Instagram `@gwalaboy_phlyy`, Facebook `onlyGwalaBoyPhlyy`, YouTube `GwalaBoyTV`
-- **Videos:** Heavy Motion, Hunnids, Custo (feat. Yung Cal), No Budget, Interview
-- **Catalog:** POWERHOUSE, Supa Dirty, Going Colossal, North Miami Big Ape, Cartier, Trap Do Numbers, TrueZtory, etc.
+- **Videos autoplay** muted + loop as each tile scrolls into view (controls stay so the
+  viewer can unmute / go fullscreen).
+- **Store is its own page** per version, with category filters (All / Apparel / Headwear /
+  Accessories) and a built-out grid (tees, hoodies, crewneck, snapback, beanie, rolling
+  tray, cover-art tee, poster) including color variants.
+
+## Images (`images/`)
+Most product/cover/hero art is **AI-generated brand artwork** (Higgsfield / GPT Image 2)
+used as polished placeholders:
+- `hero-c.jpg` — cinematic North Miami scene (silhouette, no real likeness)
+- `cover-*.jpg` — album/single cover art (powerhouse, going-colossal, big-ape, cartier, trap-do-numbers, trueztory, supa-dirty)
+- `merch-*.jpg` — product shots (tee black/cream, cover tee, hoodie black/red, crewneck, cap, beanie, rolling tray, poster)
+- `logo.png` — **placeholder** gorilla emblem. **Swap with his real logo** (used in nav, footer, store header, CTA).
+
+Replace these with real cover art, official product photos, and press shots before launch.
+Versions A and B use real **YouTube thumbnails** for hero/about; C uses the AI hero.
 
 ## ⚠️ Placeholders to fill before going fully live
-These were not publicly available — search for `TODO`-style spots and swap real values:
-1. **Booking email** — currently `booking@gwalaboyphlyy.com` (placeholder) in the Booking section + nav. Change to the real booking/management email.
-2. **Per-release deep links** — discography cards link to the artist's Spotify/Apple profile and (where a video exists) the exact YouTube URL. Swap in per-song links when you have them.
-3. **POWERHOUSE YouTube link** — the Latest feature card's YouTube icon is `#` (no public video id found). Add the real URL.
-4. **Real press photos** — `index.html` / `index-video.html` use YouTube frame grabs as stand-ins; drop official high-res shots into `images/` and update the `<img src>` in the hero + About section.
-5. **Store** — mock only. The cart is non-functional (no checkout). Wire to a real store (Shopify/Fourthwall) when ready.
+- **Logo** — `images/logo.png` is AI placeholder; drop in the real logo (same filename = no code change).
+- **Booking email** — `booking@gwalaboyphlyy.com` is a placeholder (Booking section + mailto).
+- **Per-release deep links** — discography cards link to the artist profile / the exact video where known; swap in per-song links when available.
+- **POWERHOUSE video** — Latest card's YouTube icon is `#` (no public id found yet).
+- **Press photos** — A/B use YouTube frame grabs as stand-ins; add official high-res shots.
+- **Store** — mock only; cart is a demo (no checkout). Wire to Shopify/Fourthwall later.
 
-## About the generated images (`images/`)
-Version C uses **AI-generated brand artwork** (Higgsfield / GPT Image 2) as placeholders:
-- `hero-c.jpg` — cinematic North Miami night scene (silhouette, no real likeness)
-- `cover-powerhouse.jpg`, `cover-going-colossal.jpg`, `cover-big-ape.jpg` — album-cover art
-- `merch-tee.jpg`, `merch-hoodie.jpg`, `merch-crewneck.jpg`, `merch-cap.jpg` — merch mockups
+## Copy rule
+No hyphens in visible copy (per client preference). Keep it that way when editing.
 
-These are concept/brand visuals, **not** official artwork or photos of the artist —
-replace with real cover art, product photos, and press shots before any public launch.
+## Deploy (GitHub Pages)
+Live (review): https://jamari38442.github.io/gwalaboy-phlyy/ — homepage is Version A.
+View the others at `/index-b.html` and `/index-c.html`.
 
-## Background video (index-video.html)
-Uses a muted, looping YouTube embed (Heavy Motion) behind the hero, with a poster-image
-fallback on mobile / reduced-motion. For the cleanest look, replace with a short silent
-`.mp4` loop from the artist's videographer (drop in `images/` and switch the hero to a
-`<video autoplay muted loop playsinline poster=...>` tag).
-
-## Deploy (GitHub Pages, private repo — GitHub Pro)
-```bash
-gh repo create gwalaboy-phlyy --private --source=. --push
-# then enable Pages: repo Settings → Pages → Deploy from branch → main / root
-```
-Privacy note: with Pro, Pages can publish from a **private repo**, but the live URL is
-still reachable by anyone who has the link (a true login wall needs GitHub Enterprise).
-`robots.txt` + the `noindex` meta keep it out of search engines — fine for an unlisted
-review link. For a password wall, use Netlify/Cloudflare Pages password protection instead.
+Repo is **public** (GitHub Pages free tier won't serve a private repo). `robots.txt` +
+`noindex` keep it out of search engines, so the link is effectively unlisted. For a true
+password wall, deploy to Netlify/Cloudflare Pages with password protection instead.
+Push to `main` and Pages rebuilds automatically.

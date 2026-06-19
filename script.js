@@ -51,21 +51,48 @@
     reveals.forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* ---- YouTube facade: click thumbnail -> load iframe ---- */
-  document.querySelectorAll('.vid[data-yt]').forEach(function (v) {
-    v.addEventListener('click', function () {
-      var id = v.getAttribute('data-yt');
-      if (!id || v.dataset.loaded) return;
-      v.dataset.loaded = '1';
-      var f = document.createElement('iframe');
-      f.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
-      f.title = 'GwalaBoy Phlyy video';
-      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-      f.allowFullscreen = true;
-      v.innerHTML = '';
-      v.appendChild(f);
-    });
-  });
+  /* ---- Videos: autoplay (muted, looping) as each tile scrolls into view ---- */
+  function loadVid(v) {
+    var id = v.getAttribute('data-yt');
+    if (!id || v.dataset.loaded) return;
+    v.dataset.loaded = '1';
+    var f = document.createElement('iframe');
+    // muted autoplay is required by browsers; controls stay so the viewer can unmute / go fullscreen
+    f.src = 'https://www.youtube.com/embed/' + id +
+      '?autoplay=1&mute=1&loop=1&playlist=' + id +
+      '&controls=1&rel=0&modestbranding=1&playsinline=1';
+    f.title = 'GwalaBoy Phlyy video';
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.allowFullscreen = true;
+    var keep = v.querySelector('.vid-label');
+    v.innerHTML = '';
+    v.appendChild(f);
+    if (keep) v.appendChild(keep);
+  }
+  function unloadVid(v) {
+    if (!v.dataset.loaded) return;
+    delete v.dataset.loaded;
+    var id = v.getAttribute('data-yt');
+    var label = v.querySelector('.vid-label');
+    v.innerHTML =
+      '<img loading="lazy" src="https://img.youtube.com/vi/' + id + '/hqdefault.jpg" alt="" />' +
+      '<div class="vid-play"><span class="ring"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>';
+    if (label) v.appendChild(label);
+  }
+  var vids = document.querySelectorAll('.vid[data-yt]');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (vids.length && 'IntersectionObserver' in window && !reduceMotion) {
+    var vio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) loadVid(e.target);
+        else unloadVid(e.target);
+      });
+    }, { threshold: 0.5 });
+    vids.forEach(function (v) { vio.observe(v); });
+  } else {
+    // fallback: click to play
+    vids.forEach(function (v) { v.addEventListener('click', function () { loadVid(v); }); });
+  }
 
   /* ---- hero background video (index-video.html) ----
      Inject a muted, looping, chrome-less YouTube embed on desktop.
@@ -88,6 +115,22 @@
       f.setAttribute('tabindex', '-1');
       heroVideo.appendChild(f);
     }
+  }
+
+  /* ---- store filters (store page) ---- */
+  var filterBtns = document.querySelectorAll('.filters button[data-filter]');
+  if (filterBtns.length) {
+    filterBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var cat = b.getAttribute('data-filter');
+        filterBtns.forEach(function (x) { x.classList.remove('active'); });
+        b.classList.add('active');
+        document.querySelectorAll('.item[data-cat]').forEach(function (it) {
+          var show = cat === 'all' || it.getAttribute('data-cat') === cat;
+          it.classList.toggle('hide', !show);
+        });
+      });
+    });
   }
 
   /* ---- mock cart ---- */

@@ -35,7 +35,7 @@ body::before {
 .hero::after  { bottom: 0; }
 
 .hero-title {
-  font-size: clamp(4rem, 16vw, 15rem);
+  font-size: clamp(3.2rem, 10vw, 9rem);
   background: linear-gradient(180deg, #fff7e6 0%, var(--gold) 55%, var(--gold-deep) 100%);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
