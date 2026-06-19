@@ -22,11 +22,13 @@
     burger.addEventListener('click', function () {
       var open = navLinks.classList.toggle('open');
       burger.classList.toggle('open', open);
+      if (nav) nav.classList.toggle('menu-open', open);
     });
     navLinks.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {
         navLinks.classList.remove('open');
         burger.classList.remove('open');
+        if (nav) nav.classList.remove('menu-open');
       });
     });
   }
