@@ -27,7 +27,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 84px; overflow-x: hidden; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; overflow-x: clip; }
 @keyframes navDrawerIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 
 body {
@@ -37,7 +37,7 @@ body {
   font-size: 17px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
 }
 
@@ -105,20 +105,21 @@ a { color: inherit; text-decoration: none; }
 /* =========================================================================
    NAV
    ========================================================================= */
+/* Standard sticky header: sits at the top of the page in normal flow and
+   sticks while scrolling. Always solid -> nothing ever shows above or behind it. */
 .nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
+  position: sticky;
+  top: 0;
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 16px clamp(22px, 4vw, 40px);
-  transition: background .4s var(--ease), backdrop-filter .4s var(--ease), border-color .4s;
-  border-bottom: 1px solid transparent;
+  background: var(--ink);
+  border-bottom: 1px solid var(--line);
 }
 .nav.scrolled {
-  background: rgba(10, 8, 7, 0.82);
-  backdrop-filter: blur(14px) saturate(1.2);
+  background: var(--ink);
   border-bottom: 1px solid var(--line);
 }
 .brand {
@@ -828,17 +829,13 @@ a { color: inherit; text-decoration: none; }
 
 /* ---- top social bar ---- */
 .topbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 1001;
   height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 16px;
   padding: 0 16px;
-  background: rgba(6,5,4,0.92);
-  backdrop-filter: blur(10px);
+  background: var(--ink-2);
   border-bottom: 1px solid var(--line);
 }
 .topbar a {
@@ -865,8 +862,7 @@ a { color: inherit; text-decoration: none; }
   margin-left: auto;
 }
 /* nav now sits below the top bar */
-.nav { top: 38px; }
-html { scroll-padding-top: 116px; }
+html { scroll-padding-top: 84px; }
 
 /* ---- logo ---- */
 .brand { gap: 0.6ch; }
@@ -944,7 +940,7 @@ html { scroll-padding-top: 116px; }
 }
 
 /* ---- dedicated store page ---- */
-.store-page { padding-top: 116px; }
+.store-page { padding-top: 0; }
 .store-hero {
   position: relative;
   padding: clamp(40px, 7vw, 90px) 0 clamp(28px, 4vw, 50px);
@@ -995,8 +991,7 @@ html { scroll-padding-top: 116px; }
 @media (max-width: 760px) {
   /* no top social bar on mobile */
   .topbar { display: none; }
-  .nav { top: 0; }
-  html { scroll-padding-top: 78px; }
+  html { scroll-padding-top: 72px; }
   .about-media { max-width: 100%; }
-  .store-page { padding-top: 72px; }
+  .store-page { padding-top: 0; }
 }
