@@ -27,7 +27,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 84px; overflow-x: clip; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
 @keyframes navDrawerIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 
 body {
@@ -37,7 +37,6 @@ body {
   font-size: 17px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  overflow-x: clip;
   position: relative;
 }
 
