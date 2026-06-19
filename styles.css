@@ -766,7 +766,13 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 760px) {
   body { font-size: 16px; }
   body.menu-lock { overflow: hidden; }
-  .nav { padding: calc(12px + env(safe-area-inset-top, 0px)) 20px 12px; }
+  /* solid header on mobile so the hero never shows through behind it */
+  .nav {
+    padding: calc(10px + env(safe-area-inset-top, 0px)) 20px 10px;
+    background: rgba(10, 8, 7, 0.96);
+    backdrop-filter: blur(12px) saturate(1.2);
+    border-bottom: 1px solid var(--line);
+  }
   .nav-links {
     position: fixed;
     inset: 0;
