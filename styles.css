@@ -758,7 +758,8 @@ a { color: inherit; text-decoration: none; }
   .latest-grid { grid-template-columns: 1fr 1fr; }
   .drop--feature { grid-column: 1 / -1; grid-row: auto; min-height: 340px; }
   .music-layout { grid-template-columns: 1fr; }
-  .music-aside { position: static; }
+  /* stacked: show Press Play above the catalog */
+  .music-aside { position: static; order: -1; margin-bottom: 8px; }
   .shop-grid { grid-template-columns: repeat(2, 1fr); }
   .book-card { grid-template-columns: 1fr; }
 }
