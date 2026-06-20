@@ -118,6 +118,13 @@ a { color: inherit; text-decoration: none; }
   background: var(--ink);
   border-bottom: 1px solid var(--line);
   box-shadow: 0 1px 12px rgba(0,0,0,0.45);
+  /* Force a GPU compositing layer so the pinned bar doesn't lag/flicker during
+     iOS Safari momentum scroll (which lets page content show through behind it
+     and the status bar). */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .nav.scrolled {
   background: var(--ink);
@@ -171,10 +178,15 @@ a { color: inherit; text-decoration: none; }
 .burger {
   display: none;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
   background: none;
   border: 0;
   cursor: pointer;
+  /* Apple HIG minimum tap target */
+  min-width: 44px;
+  min-height: 44px;
   padding: 6px;
 }
 .burger span {
@@ -716,14 +728,17 @@ a { color: inherit; text-decoration: none; }
 }
 .book-card .section-title { font-size: clamp(2.4rem, 6vw, 4.6rem); margin-bottom: 18px; }
 .book-card p { color: var(--bone-dim); margin-bottom: 26px; max-width: 42ch; }
-.book-contact { display: flex; flex-direction: column; gap: 14px; }
+.book-contact { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .book-contact a {
   display: flex; align-items: center; gap: 14px;
   border: 1px solid var(--line);
   border-radius: 4px;
   padding: 16px 18px;
+  min-width: 0;                /* allow the card to shrink within its column */
   transition: border-color .25s, transform .25s, background .25s;
 }
+.book-contact .txt { min-width: 0; }
+.book-contact .txt b { overflow-wrap: anywhere; word-break: break-word; }
 .book-contact a:hover { border-color: var(--gold); transform: translateX(5px); background: rgba(244,183,63,0.05); }
 .book-contact .ico { width: 42px; height: 42px; flex: none; display: grid; place-items: center; border-radius: 50%; background: var(--gold-soft); color: var(--gold); }
 .book-contact .ico svg { width: 18px; height: 18px; }
@@ -809,7 +824,7 @@ a { color: inherit; text-decoration: none; }
     width: 100%;
     text-align: center;
     font-size: 1rem;
-    padding: 15px 24px;
+    padding: 18px 24px;       /* taller rows: comfortable 44pt+ tap targets */
     border-bottom: 1px solid var(--line);
   }
   .nav.menu-open .nav-links a:last-child { border-bottom: none; }
@@ -850,6 +865,11 @@ a { color: inherit; text-decoration: none; }
   padding: 0 16px;
   background: var(--ink-2);
   border-bottom: 1px solid var(--line);
+  /* same GPU-layer fix as .nav for the iOS Safari scroll flicker */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .topbar a {
   color: var(--bone-dim);
