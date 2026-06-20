@@ -1,0 +1,82 @@
+/* =========================================================================
+   VERSION D — "The Press Kit" edition.
+   Layered ON TOP of styles.css. Split press-sheet hero, editorial type,
+   sharp gold-accented cards. Overrides only — no nav rules here.
+   ========================================================================= */
+
+/* ---- HERO: left-aligned editorial copy (base = full-bleed) ---- */
+.hero { align-items: flex-end; }
+.hero .wrap { max-width: 620px; margin-inline: 0; }
+.hero-actions { justify-content: flex-start; }
+
+/* hero title: bold, layered, editorial */
+.hero-title {
+  font-size: clamp(3.4rem, 12vw, 11rem);
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.35),
+    0 10px 50px rgba(0, 0, 0, 0.65);
+}
+.hero-title .ln-2 { color: var(--gold); -webkit-text-stroke: 0; }
+
+/* edition label: small mono tag, top-left of hero, above the scrim */
+.edition-label {
+  position: absolute;
+  top: clamp(18px, 4vw, 36px);
+  left: clamp(22px, 4vw, 40px);
+  z-index: 4;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+}
+.edition-label b { color: var(--gold); font-weight: 500; }
+
+/* ---- DESKTOP: split press sheet — image pinned to the right ~46% ---- */
+@media (min-width: 1000px) {
+  .hero-bg {
+    left: 54%;
+    border-left: 2px solid var(--gold);
+  }
+  .hero-bg img {
+    filter: grayscale(0.85) contrast(1.2) brightness(0.92);
+  }
+  /* solid ink on the left for legible left-aligned copy, fading over image */
+  .hero-scrim {
+    background:
+      linear-gradient(90deg,
+        var(--ink) 0%,
+        var(--ink) 46%,
+        rgba(10, 8, 7, 0.78) 58%,
+        rgba(10, 8, 7, 0.25) 78%,
+        transparent 100%),
+      linear-gradient(180deg, transparent 55%, rgba(10, 8, 7, 0.6) 88%, var(--ink) 100%);
+  }
+}
+
+/* ---- MOBILE / small screens: reset to base full-bleed behavior ---- */
+@media (max-width: 999px) {
+  .hero-bg {
+    left: 0;
+    border-left: 0;
+  }
+  .hero-scrim {
+    background:
+      linear-gradient(180deg, rgba(10, 8, 7, 0.5) 0%, rgba(10, 8, 7, 0.4) 40%, rgba(10, 8, 7, 0.92) 88%, var(--ink) 100%);
+  }
+  .edition-label { display: none; }
+}
+
+/* ---- ACCENTS: sharper cards + gold signature ---- */
+.drop, .rel, .item, .vid {
+  border-radius: 2px;
+}
+.drop:hover, .rel:hover, .item:hover, .vid:hover {
+  border-color: var(--gold);
+}
+
+/* gold left-tab on section titles — press-sheet index feel */
+.section-title {
+  border-left: 3px solid var(--gold);
+  padding-left: clamp(14px, 2vw, 22px);
+}
