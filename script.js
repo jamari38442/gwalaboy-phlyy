@@ -11,11 +11,18 @@
   var burger = document.getElementById('burger');
   var navLinks = document.getElementById('navLinks');
 
+  /* App-shell: the page scrolls inside .scroll-area, not the window. Fall back
+     to the window if the shell isn't present. */
+  var scroller = document.querySelector('.scroll-area');
+  var scrollTarget = scroller || window;
+  var ioRoot = scroller || null;
+
   function onScroll() {
     if (!nav) return;
-    nav.classList.toggle('scrolled', window.scrollY > 40);
+    var y = scroller ? scroller.scrollTop : window.scrollY;
+    nav.classList.toggle('scrolled', y > 40);
   }
-  window.addEventListener('scroll', onScroll, { passive: true });
+  scrollTarget.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
   if (burger && navLinks) {
@@ -49,7 +56,7 @@
           io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    }, { root: ioRoot, threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
     reveals.forEach(function (el) { io.observe(el); });
   } else {
     reveals.forEach(function (el) { el.classList.add('in'); });
@@ -91,7 +98,7 @@
         if (e.isIntersecting) loadVid(e.target);
         else unloadVid(e.target);
       });
-    }, { threshold: 0.5 });
+    }, { root: ioRoot, threshold: 0.5 });
     vids.forEach(function (v) { vio.observe(v); });
   } else {
     // fallback: click to play
