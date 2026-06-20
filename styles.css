@@ -991,8 +991,11 @@ html { scroll-padding-top: 84px; }
 }
 
 @media (max-width: 760px) {
-  /* no top social bar on mobile */
-  .topbar { display: none; }
+  /* social bar visible on mobile: icons only (hide the text tags so the row
+     fits a narrow screen without crowding/overflow) */
+  .topbar { display: flex; gap: 18px; }
+  .topbar .tb-tag,
+  .topbar .tb-tag2 { display: none; }
   html { scroll-padding-top: 72px; }
   .about-media { max-width: 100%; }
   .store-page { padding-top: 0; }
