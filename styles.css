@@ -38,6 +38,11 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  /* iPhone safe areas (needs viewport-fit=cover): start content below the
+     status bar / notch and clear the home indicator. The strip above the
+     content shows the body background (--ink, the menu-bar color). */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 /* film grain overlay — sits above everything, ignores pointer */
@@ -109,7 +114,8 @@ a { color: inherit; text-decoration: none; }
    shadow so nothing shows above or behind it. */
 .nav {
   position: sticky;
-  top: 38px;                /* pin directly below the sticky social bar (38px) */
+  /* pin directly below the sticky social bar (38px) + the notch inset */
+  top: calc(38px + env(safe-area-inset-top, 0px));
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -840,7 +846,7 @@ a { color: inherit; text-decoration: none; }
 /* ---- top social bar (pinned: stays at the very top while scrolling) ---- */
 .topbar {
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);   /* pin just below the notch fill */
   z-index: 1001;            /* above the nav so they stack cleanly */
   height: 38px;
   display: flex;
@@ -850,6 +856,22 @@ a { color: inherit; text-decoration: none; }
   padding: 0 16px;
   background: var(--ink-2);
   border-bottom: 1px solid var(--line);
+}
+/* Paint the iPhone status-bar / notch strip ABOVE the social bar in the
+   menu-bar color (--ink), reaching the very top edge of the screen. Sits over
+   the social bar's row only in the inset region (the bar starts below it).
+   html::before avoids colliding with version C's body::before vignette, and is
+   inert (0px tall) when there is no inset / no viewport-fit=cover. */
+html::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--ink);
+  z-index: 10001;
+  pointer-events: none;
 }
 .topbar a {
   color: var(--bone-dim);
@@ -1006,11 +1028,10 @@ html { scroll-padding-top: 104px; }
      fits a narrow screen without crowding/overflow). The bar extends up into
      the iOS safe-area (notch) with its own background, so it both shows the
      icons and keeps the top strip painted — no separate fill needed. */
-  .topbar {
-    gap: 18px;
-    height: calc(38px + env(safe-area-inset-top, 0px));
-    padding-top: env(safe-area-inset-top, 0px);
-  }
+  /* social bar: icons only on mobile (text tags hidden). Height/offset come
+     from the base rule (top: env safe-area). The --ink notch strip above it is
+     painted by html::before; content sits below it via body padding-top. */
+  .topbar { gap: 18px; }
   .topbar .tb-tag,
   .topbar .tb-tag2 { display: none; }
   html { scroll-padding-top: calc(104px + env(safe-area-inset-top, 0px)); }
