@@ -27,7 +27,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+html { scroll-behavior: smooth; scroll-padding-top: 104px; }
 @keyframes navDrawerIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 
 body {
@@ -109,7 +109,7 @@ a { color: inherit; text-decoration: none; }
    shadow so nothing shows above or behind it. */
 .nav {
   position: sticky;
-  top: 0;
+  top: 38px;                /* pin directly below the sticky social bar (38px) */
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -768,10 +768,11 @@ a { color: inherit; text-decoration: none; }
 }
 @media (max-width: 760px) {
   body { font-size: 16px; }
-  /* opaque sticky header on mobile */
+  /* opaque sticky header on mobile, pinned below the sticky social bar
+     (38px + notch inset) so both stay visible while scrolling */
   .nav,
   .nav.scrolled {
-    top: 0;
+    top: calc(38px + env(safe-area-inset-top, 0px));
     padding: 14px 20px;
     background: var(--ink);
     border-bottom: 1px solid var(--line);
@@ -795,6 +796,13 @@ a { color: inherit; text-decoration: none; }
     box-shadow: 0 14px 30px rgba(0,0,0,0.55);
     animation: navDrawerIn .26s var(--ease);
     z-index: 1000;
+    /* never let the panel run past the screen: cap to the space below the
+       pinned header and scroll inside if the links don't all fit */
+    max-height: calc(100vh - 104px);
+    max-height: calc(100dvh - 104px - env(safe-area-inset-top, 0px));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
   .nav.menu-open .nav-links a {
     display: block;
@@ -829,8 +837,11 @@ a { color: inherit; text-decoration: none; }
    ADDITIONS — top social bar, logo, about media, store page, cta band
    ========================================================================= */
 
-/* ---- top social bar ---- */
+/* ---- top social bar (pinned: stays at the very top while scrolling) ---- */
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1001;            /* above the nav so they stack cleanly */
   height: 38px;
   display: flex;
   align-items: center;
@@ -864,7 +875,7 @@ a { color: inherit; text-decoration: none; }
   margin-left: auto;
 }
 /* nav now sits below the top bar */
-html { scroll-padding-top: 84px; }
+html { scroll-padding-top: 104px; }
 
 /* ---- logo ---- */
 .brand { gap: 0.6ch; }
@@ -996,15 +1007,13 @@ html { scroll-padding-top: 84px; }
      the iOS safe-area (notch) with its own background, so it both shows the
      icons and keeps the top strip painted — no separate fill needed. */
   .topbar {
-    display: flex;
     gap: 18px;
-    height: auto;
-    padding-top: calc(8px + env(safe-area-inset-top, 0px));
-    padding-bottom: 8px;
+    height: calc(38px + env(safe-area-inset-top, 0px));
+    padding-top: env(safe-area-inset-top, 0px);
   }
   .topbar .tb-tag,
   .topbar .tb-tag2 { display: none; }
-  html { scroll-padding-top: 72px; }
+  html { scroll-padding-top: calc(104px + env(safe-area-inset-top, 0px)); }
   .about-media { max-width: 100%; }
   .store-page { padding-top: 0; }
 }
