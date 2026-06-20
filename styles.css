@@ -992,28 +992,19 @@ html { scroll-padding-top: 84px; }
 
 @media (max-width: 760px) {
   /* social bar visible on mobile: icons only (hide the text tags so the row
-     fits a narrow screen without crowding/overflow) */
-  .topbar { display: flex; gap: 18px; }
+     fits a narrow screen without crowding/overflow). The bar extends up into
+     the iOS safe-area (notch) with its own background, so it both shows the
+     icons and keeps the top strip painted — no separate fill needed. */
+  .topbar {
+    display: flex;
+    gap: 18px;
+    height: auto;
+    padding-top: calc(8px + env(safe-area-inset-top, 0px));
+    padding-bottom: 8px;
+  }
   .topbar .tb-tag,
   .topbar .tb-tag2 { display: none; }
   html { scroll-padding-top: 72px; }
   .about-media { max-width: 100%; }
   .store-page { padding-top: 0; }
-}
-
-/* With the social strip hidden on mobile, the iOS safe-area strip at the very
-   top is left unpainted and the page shows through it while scrolling. Fill it
-   with the menu-bar color (--ink). html::before is used so it never collides
-   with version C's body::before vignette. env() is 0 on non-notch devices, so
-   this is inert there. */
-html::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: env(safe-area-inset-top, 0px);
-  background: var(--ink);
-  z-index: 10000;
-  pointer-events: none;
 }
