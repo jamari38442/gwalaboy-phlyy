@@ -24,15 +24,13 @@ body::before {
     linear-gradient(90deg, rgba(10,8,7,0.85) 0%, rgba(10,8,7,0.35) 45%, rgba(10,8,7,0.55) 100%),
     linear-gradient(180deg, rgba(10,8,7,0.6), rgba(10,8,7,0.55) 60%, var(--ink) 100%);
 }
-/* cinematic top/bottom bars */
-.hero::before, .hero::after {
+/* cinematic bottom bar (top bar removed — it read as a gap below the nav) */
+.hero::after {
   content: "";
-  position: absolute; left: 0; right: 0; height: 46px; z-index: 3;
+  position: absolute; left: 0; right: 0; bottom: 0; height: 46px; z-index: 3;
   background: var(--ink);
   pointer-events: none;
 }
-.hero::before { top: 0; }
-.hero::after  { bottom: 0; }
 
 .hero-title {
   font-size: clamp(3.2rem, 10vw, 9rem);
@@ -86,7 +84,7 @@ body::before {
 .book-card { box-shadow: 0 30px 80px -40px rgba(247,193,75,0.4); }
 
 @media (max-width: 760px) {
-  .hero::before, .hero::after { height: 26px; }
+  .hero::after { height: 26px; }
   .edition-label { display: none; }
   /* narrow crop: keep the subject (already at the top of the frame) anchored up top */
   .hero-bg img { object-position: 60% top; }
