@@ -18,7 +18,7 @@ body::before {
 
 /* ---- HERO: editorial letterbox + side label ---- */
 .hero { align-items: center; }
-.hero-bg img { filter: grayscale(0.15) contrast(1.1) brightness(0.92); object-position: 70% 38%; }
+.hero-bg img { filter: grayscale(0.15) contrast(1.1) brightness(0.92); object-position: 66% 16%; }
 .hero-scrim {
   background:
     linear-gradient(90deg, rgba(10,8,7,0.85) 0%, rgba(10,8,7,0.35) 45%, rgba(10,8,7,0.55) 100%),
@@ -77,8 +77,10 @@ body::before {
 /* store: cinematic captions */
 .item-img img { filter: grayscale(0.05) contrast(1.05) brightness(0.96); }
 
-/* about portrait uses generated cinematic frame */
-.about-portrait img { filter: grayscale(0.1) contrast(1.08); object-position: 50% 22%; }
+/* about portrait: the C photo is a real portrait, so use a portrait frame
+   (overriding the base 16/9 video frame) and zoom out to show the full artist */
+.about-portrait { aspect-ratio: 4/5; }
+.about-portrait img { filter: grayscale(0.1) contrast(1.08); object-position: 50% 32%; }
 
 /* booking card glow */
 .book-card { box-shadow: 0 30px 80px -40px rgba(247,193,75,0.4); }
@@ -86,4 +88,6 @@ body::before {
 @media (max-width: 760px) {
   .hero::before, .hero::after { height: 26px; }
   .edition-label { display: none; }
+  /* on the narrow crop, drop the focal point so his face clears the nav */
+  .hero-bg img { object-position: 60% 38%; }
 }
